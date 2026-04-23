@@ -33,7 +33,7 @@ export default function Navbar() {
         <ul className="nav-links">
           {LINKS.map(l => (
             <li key={l.to}>
-              <NavLink to={l.to} className={({ isActive }) => isActive ? "active" : ""}>
+              <NavLink to={l.to} end={l.to === "/"} className={({ isActive }) => isActive ? "active" : ""}>
                 {l.label}
               </NavLink>
             </li>

@@ -11,5 +11,5 @@ export function useScrollReveal() {
     const els = document.querySelectorAll(".sr");
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  });
+  }, []); // Fix: empty dep array prevents a new observer being created on every render
 }

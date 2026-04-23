@@ -17,6 +17,7 @@ export default function Login() {
     setLoading(true);
     try {
       login(form.email, form.password);
+      setLoading(false); // Fix: reset loading before navigating so state is clean
       navigate("/");
     } catch (err) {
       setError(err.message || "Invalid credentials.");
