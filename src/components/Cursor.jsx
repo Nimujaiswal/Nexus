@@ -1,7 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Cursor() {
+  // Don't render cursor on touch/mobile devices
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
   useEffect(() => {
+    const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    setIsTouchDevice(isTouch);
+    if (isTouch) return; // Don't attach any cursor logic on touch devices
+
     const dot  = document.getElementById("cursor-dot");
     const ring = document.getElementById("cursor-ring");
     const progress = document.getElementById("scroll-progress");
@@ -60,11 +67,16 @@ export default function Cursor() {
     };
   }, []);
 
+  // Render progress bar always; cursor dots only on non-touch
   return (
     <>
       <div id="scroll-progress" />
-      <div id="cursor-dot" />
-      <div id="cursor-ring" />
+      {!isTouchDevice && (
+        <>
+          <div id="cursor-dot" />
+          <div id="cursor-ring" />
+        </>
+      )}
     </>
   );
 }

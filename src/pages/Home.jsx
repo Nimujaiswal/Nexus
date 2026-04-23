@@ -61,7 +61,7 @@ export default function Home() {
         <div className="hero-content" ref={heroRef}>
           
           <h1 className="hero-title">
-            <span style={{ fontSize: "0.4em", letterSpacing: "0.1em", color: "#9ca3af", display: "block", marginBottom: "20px", textTransform: "uppercase" }}>
+            <span style={{ fontSize: "0.3em", letterSpacing: "0.18em", color: "rgba(156,163,175,0.7)", display: "block", marginBottom: "1.2rem", textTransform: "uppercase", fontFamily: "var(--ff-mono)", fontWeight: 400 }}>
               Welcome to Nexus
             </span>
             Redefine Your <br />
