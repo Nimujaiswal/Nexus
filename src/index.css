@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────
    NEXUS GAMING — Global Styles v3 (Mobile-First Flex)
 ───────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 
 :root {
   --bg:        #04040a;
@@ -19,7 +19,7 @@
   --border:    rgba(255,255,255,0.07);
   --border-2:  rgba(255,255,255,0.14);
   --ff-display: 'Bebas Neue', sans-serif;
-  --ff-body:    'Syne', sans-serif;
+  --ff-body:    'Outfit', sans-serif;
   --ff-mono:    'DM Mono', monospace;
   --radius:     20px;
   --radius-sm:  14px;
@@ -35,6 +35,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 html::-webkit-scrollbar { display: none; }
 
@@ -52,6 +54,7 @@ body {
   color: var(--white);
   font-family: var(--ff-body);
   overflow-x: hidden;
+  max-width: 100vw;
   cursor: none;
   -webkit-font-smoothing: antialiased;
 }
@@ -106,7 +109,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
 .loader-pct { font-family:var(--ff-mono); font-size:.65rem; color:var(--white-dim); letter-spacing:4px; }
 
 /* ── UTILITY ── */
-.container { max-width:1300px; margin:0 auto; padding:0 2.5rem; }
+.container { max-width:1300px; margin:0 auto; padding:0 2.5rem; box-sizing:border-box; }
 
 .section-tag {
   font-family:var(--ff-mono); font-size:.6rem;
@@ -226,6 +229,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
 /* ── TICKER ── */
 .ticker-wrap {
   overflow:hidden;
+  max-width:100vw;
   border-top:1px solid var(--border); border-bottom:1px solid var(--border);
   padding:.7rem 0; background:rgba(87,36,255,.03);
 }
@@ -240,7 +244,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
 .hero {
   position:relative; width:100%; min-height:100dvh;
   display:flex; align-items:center;
-  padding-top:72px; overflow:clip;
+  padding-top:72px; overflow:hidden;
 }
 .hero-bg {
   position:absolute; inset:0; z-index:0;
@@ -282,6 +286,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   align-items:center; gap:4rem;
   padding:4rem 3rem 4rem;
   max-width:1300px; margin:0 auto;
+  box-sizing:border-box;
 }
 .hero-left { display:flex; flex-direction:column; }
 .hero-right { position:relative; display:flex; align-items:center; justify-content:center; padding:30px 20px 60px 20px; }
@@ -639,11 +644,13 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   .hero { padding-top:62px; min-height:100svh; align-items:flex-start; }
   .hero-inner {
     grid-template-columns:1fr;
-    padding:1.5rem 1.4rem 3rem;
+    padding:1.5rem 1.2rem 3rem;
     gap:2rem;
+    width:100%;
+    box-sizing:border-box;
   }
   .hero-right { order:-1; padding:30px 0 40px 0; }
-  .hero-showcase { max-width:100%; width:100%; }
+  .hero-showcase { max-width:100%; width:100%; box-sizing:border-box; overflow:hidden; }
   .showcase-game { height:175px; font-size:4.5rem; }
   .hero-badge-1 { top:8px; right:0px; }
   .hero-badge-2 { bottom:10px; left:0px; }
@@ -657,7 +664,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   .hero-stat-num { font-size:1.6rem; }
 
   /* Bento */
-  .bento-grid { grid-template-columns:1fr; gap:1rem; }
+  .bento-grid { grid-template-columns:1fr; gap:1rem; width:100%; }
   .bento-card.col2 { grid-column:span 1; }
   .bento-card.tall { min-height:280px; }
   .bento-card.mid  { min-height:200px; }
@@ -667,7 +674,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   .stats-strip { padding:3.5rem 0; }
 
   /* Games */
-  .games-grid { grid-template-columns:1fr 1fr; gap:1rem; }
+  .games-grid { grid-template-columns:1fr 1fr; gap:.85rem; }
   .game-thumb { height:140px; font-size:3.5rem; }
   .game-body { padding:1rem; }
   .game-name { font-size:1.2rem; }
@@ -908,4 +915,48 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   .arcade-promo-card { grid-template-columns:1fr; gap:2rem; padding:2rem 1.4rem; }
   .arcade-promo-right { grid-template-columns:1fr 1fr; }
   .arcade-mini-card.span2 { grid-column:span 2; }
+}
+
+/* ── STRICT HORIZONTAL SCROLL PREVENTION ── */
+/* Every element must stay within viewport width */
+*, *::before, *::after {
+  max-width: 100%;
+}
+/* Exceptions for fixed/absolute positioned elements */
+#cursor-dot, #cursor-ring, #scroll-progress,
+.hero-orb1, .hero-orb2, .hero-bg, .hero-grid,
+.mobile-menu { max-width: none; }
+
+/* Ensure no grid/flex child can push beyond viewport */
+@media(max-width:768px) {
+  .hero-left, .hero-right { min-width: 0; overflow: hidden; }
+  .hero-badge-1, .hero-badge-2 { 
+    max-width: calc(100vw - 2.8rem);
+    white-space: nowrap;
+  }
+  .bento-card, .game-card, .tl-card, .spec-card,
+  .contact-form-card, .auth-card { 
+    min-width: 0; 
+    box-sizing: border-box;
+  }
+  .hero-title { word-break: break-word; }
+  .section-tag { flex-wrap: wrap; }
+  .ticker-track { animation-play-state: running; }
+  /* Prevent table from causing overflow */
+  .lb-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 500px; }
+  /* Stats grid strictly 2 col */
+  .stats-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+@media(max-width:480px) {
+  .navbar { padding: .8rem 1rem; }
+  .hero-inner { padding: 1.2rem 1rem 2.5rem; }
+  .container { padding: 0 1rem; }
+  .hero-badge { font-size: .75rem; padding: .5rem .75rem; }
+  .hero-badge-icon { font-size: 1rem; }
+  .showcase-info { padding: 1rem 1.2rem; }
+  .showcase-header { padding: 1rem 1.2rem; }
+  /* Ensure bento cards never overflow */
+  .bento-inner { padding: 1.4rem; }
 }

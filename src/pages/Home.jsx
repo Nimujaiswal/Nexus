@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Ticker from "../components/Ticker";
 import { GAMES } from "../data";
 
@@ -35,6 +35,7 @@ const SHOWCASE_GAMES = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   const featured = GAMES.filter(g => g.featured).slice(0, 3);
   const [activeGame, setActiveGame] = useState(0);
 
@@ -166,7 +167,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <button className="showcase-btn">
+                <button className="showcase-btn" onClick={() => navigate("/arcade")}>
                   ▶ &nbsp;Play Now — It's Free
                 </button>
               </div>
@@ -298,8 +299,7 @@ export default function Home() {
             <h2>Your Legend<br /><span className="clip-text">Starts Now</span></h2>
             <p>Join 2.4 million players already competing on NEXUS. Free to start. Forever to master.</p>
             <div className="cta-btns">
-              <Link to="/register" className="btn-yellow">Create Free Account</Link>
-              <Link to="/games"    className="btn-outline">Browse Games</Link>
+              <Link to="/register" className="btn-yellow">Create Free Account →</Link>
             </div>
           </div>
         </div>

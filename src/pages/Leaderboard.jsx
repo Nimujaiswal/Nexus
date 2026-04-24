@@ -57,7 +57,7 @@ export default function Leaderboard() {
 
         {/* Full table */}
         <div className="sr" style={{ background:"var(--bg-2)", border:"1px solid var(--border)", borderRadius:"var(--radius)", overflow:"hidden" }}>
-          <table className="lb-table">
+          <div className="lb-table-wrap"><table className="lb-table">
             <thead>
               <tr>
                 <th>#</th>
@@ -88,7 +88,7 @@ export default function Leaderboard() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         {/* Season info */}
