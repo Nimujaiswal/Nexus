@@ -240,7 +240,7 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
 .hero {
   position:relative; width:100%; min-height:100dvh;
   display:flex; align-items:center;
-  padding-top:72px; overflow:hidden;
+  padding-top:72px; overflow:clip;
 }
 .hero-bg {
   position:absolute; inset:0; z-index:0;
@@ -280,11 +280,11 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   width:100%; display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center; gap:4rem;
-  padding:4rem 3rem;
+  padding:4rem 3rem 4rem;
   max-width:1300px; margin:0 auto;
 }
 .hero-left { display:flex; flex-direction:column; }
-.hero-right { position:relative; display:flex; align-items:center; justify-content:center; }
+.hero-right { position:relative; display:flex; align-items:center; justify-content:center; padding:30px 20px 60px 20px; }
 
 .hero-eyebrow {
   display:inline-flex; align-items:center; gap:.6rem;
@@ -409,8 +409,8 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   box-shadow:0 8px 32px rgba(0,0,0,.4);
   animation:badgeFloat 4s ease-in-out infinite;
 }
-.hero-badge-1 { top:-20px; right:20px; animation-delay:0s; }
-.hero-badge-2 { bottom:30px; left:-30px; animation-delay:1.5s; }
+.hero-badge-1 { top:10px; right:-10px; animation-delay:0s; z-index:10; }
+.hero-badge-2 { bottom:50px; left:-10px; animation-delay:1.5s; z-index:10; }
 @keyframes badgeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .hero-badge-icon { font-size:1.2rem; }
 .hero-badge-text { display:flex; flex-direction:column; gap:.1rem; }
@@ -636,17 +636,17 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
   .nav-hamburger { display:flex; align-items:center; }
 
   /* Hero */
-  .hero { padding-top:66px; min-height:100svh; align-items:flex-start; }
+  .hero { padding-top:62px; min-height:100svh; align-items:flex-start; }
   .hero-inner {
     grid-template-columns:1fr;
-    padding:2.5rem 1.4rem 3rem;
-    gap:2.5rem;
+    padding:1.5rem 1.4rem 3rem;
+    gap:2rem;
   }
-  .hero-right { order:-1; }
-  .hero-showcase { max-width:100%; }
-  .showcase-game { height:180px; font-size:4.5rem; }
-  .hero-badge-1 { top:-14px; right:10px; }
-  .hero-badge-2 { bottom:20px; left:-10px; }
+  .hero-right { order:-1; padding:30px 0 40px 0; }
+  .hero-showcase { max-width:100%; width:100%; }
+  .showcase-game { height:175px; font-size:4.5rem; }
+  .hero-badge-1 { top:8px; right:0px; }
+  .hero-badge-2 { bottom:10px; left:0px; }
   .hero-eyebrow { font-size:.54rem; }
   .hero-title { font-size:clamp(3.5rem,14vw,6.5rem); letter-spacing:-1px; }
   .hero-desc { font-size:.88rem; }
@@ -753,4 +753,159 @@ body.cursor-click #cursor-dot  { width:5px; height:5px; background:var(--blue); 
 @media(max-width:768px) and (orientation:landscape){
   .hero { min-height:auto; padding-top:80px; padding-bottom:3rem; }
   .hero-title { font-size:clamp(3rem,10vw,5.5rem); }
+}
+
+/* ─────────────────────────── ARCADE PAGE ─────────────────────────── */
+.arcade-score-badge {
+  background:rgba(255,255,255,.04); border:1px solid var(--border-2);
+  border-radius:var(--radius-sm); padding:1.2rem 2rem; text-align:center;
+  backdrop-filter:blur(12px);
+}
+.arcade-tabs {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem;
+}
+.arcade-tab {
+  background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:1.2rem 1.4rem; display:flex; align-items:center; gap:1rem; text-align:left;
+  cursor:none; transition:var(--t); color:var(--white); font-family:var(--ff-body);
+}
+.arcade-tab:hover { border-color:var(--border-2); background:var(--bg-3); }
+.arcade-tab.active {
+  border-color:var(--tab-color,var(--yellow));
+  background:rgba(255,255,255,.05);
+  box-shadow:0 0 0 1px var(--tab-color,var(--yellow)) inset, 0 8px 30px rgba(0,0,0,.3);
+}
+.arcade-area {
+  background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius);
+  min-height:480px; display:flex; align-items:stretch; overflow:hidden;
+}
+.arcade-game-wrap {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:flex-start; padding:2.5rem; gap:1.5rem;
+}
+
+/* Reflex */
+.reflex-stats { display:flex; gap:2.5rem; }
+.reflex-stat  { display:flex; flex-direction:column; align-items:center; gap:.2rem; }
+.rs-val { font-family:var(--ff-display); font-size:1.6rem; line-height:1; }
+.rs-lbl { font-family:var(--ff-mono); font-size:.52rem; letter-spacing:3px; text-transform:uppercase; color:var(--white-dim); }
+.reflex-target {
+  width:100%; max-width:460px; height:220px;
+  border-radius:var(--radius); border:1px solid var(--border);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6rem;
+  cursor:none; transition:background .25s, border-color .25s, transform .15s;
+  background:var(--bg-3); position:relative; overflow:hidden;
+}
+.reflex-target:hover { transform:scale(1.01); }
+.reflex-target.wait { background:rgba(0,0,0,.4); cursor:none; }
+.reflex-target.go   { background:rgba(74,222,128,.1); border-color:var(--green); box-shadow:0 0 60px rgba(74,222,128,.2); cursor:none; }
+.reflex-target.dead { background:rgba(248,113,113,.06); border-color:var(--red); }
+.rt-icon { font-size:3.5rem; line-height:1; }
+.rt-msg  { font-family:var(--ff-display); font-size:1.4rem; letter-spacing:2px; text-transform:uppercase; }
+.rt-reaction { font-family:var(--ff-display); font-size:3.5rem; line-height:1; color:var(--white); }
+.rt-grade    { font-family:var(--ff-mono); font-size:.7rem; letter-spacing:5px; font-weight:700; }
+.go-pulse    { animation:goPulse .4s ease-in-out infinite alternate; }
+@keyframes goPulse { from{transform:scale(1)} to{transform:scale(1.15)} }
+.go-text     { color:var(--green); animation:goPulse .3s ease-in-out infinite alternate; }
+.reflex-hint { font-family:var(--ff-mono); font-size:.6rem; letter-spacing:2px; color:var(--white-dim); text-align:center; text-transform:uppercase; }
+
+/* Memory */
+.memory-idle {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; cursor:none; width:100%;
+}
+.memory-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:.6rem;
+  width:100%; max-width:340px;
+}
+.memory-cell {
+  aspect-ratio:1; border-radius:10px;
+  background:rgba(255,255,255,.05); border:1px solid var(--border);
+  transition:background .18s, box-shadow .18s, transform .15s;
+  cursor:none;
+}
+.memory-cell.clickable { cursor:none; }
+.memory-cell.clickable:hover { background:rgba(79,183,221,.12); border-color:rgba(79,183,221,.4); transform:scale(1.06); }
+.memory-cell.lit { background:rgba(232,255,77,.25); border-color:var(--yellow); box-shadow:0 0 20px rgba(232,255,77,.3); transform:scale(1.08); }
+.memory-cell.wrong { background:rgba(248,113,113,.25); border-color:var(--red); box-shadow:0 0 20px rgba(248,113,113,.3); animation:wrongShake .3s; }
+@keyframes wrongShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+
+/* Aim */
+.aim-hud { display:flex; gap:2.5rem; }
+.aim-area {
+  width:100%; flex:1; position:relative;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(87,36,255,.06),transparent),
+             var(--bg-3);
+  border-radius:var(--radius-sm); border:1px solid var(--border);
+  min-height:320px; overflow:hidden; cursor:crosshair;
+}
+.aim-target {
+  position:absolute; border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(248,113,113,.9) 30%,rgba(248,113,113,.3) 70%,transparent 100%);
+  border:2px solid rgba(248,113,113,.8);
+  box-shadow:0 0 20px rgba(248,113,113,.4);
+  cursor:crosshair; animation:targetShrink var(--life,1.5s) linear forwards;
+}
+.aim-target:hover { background:radial-gradient(circle,rgba(232,255,77,.9) 30%,rgba(232,255,77,.3) 70%,transparent 100%); border-color:var(--yellow); }
+@keyframes targetShrink {
+  0%   { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  80%  { opacity:.8; transform:translate(-50%,-50%) scale(.7); }
+  100% { opacity:0; transform:translate(-50%,-50%) scale(.3); }
+}
+
+/* Arcade responsive */
+@media(max-width:768px){
+  .arcade-tabs { grid-template-columns:1fr; }
+  .arcade-tab { padding:1rem; }
+  .arcade-area { min-height:400px; }
+  .arcade-game-wrap { padding:1.5rem 1.2rem; }
+  .memory-grid { max-width:270px; gap:.45rem; }
+  .reflex-target { max-width:100%; height:185px; }
+  .aim-area { min-height:260px; }
+}
+
+/* Arcade promo home section mobile */
+@media(max-width:768px){
+  .arcade-promo-grid { grid-template-columns:1fr !important; }
+}
+
+/* Arcade promo card */
+.arcade-promo-card {
+  display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+  background:var(--bg-2); border:1px solid var(--border);
+  border-radius:28px; padding:3rem; overflow:hidden; position:relative;
+}
+.arcade-promo-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(232,255,77,.05),transparent);
+}
+.arcade-promo-left { position:relative; z-index:1; }
+.arcade-promo-title {
+  font-family:var(--ff-display); font-size:clamp(2rem,4vw,3.5rem);
+  text-transform:uppercase; letter-spacing:-1px; line-height:.95; margin-bottom:1rem;
+}
+.arcade-promo-desc {
+  color:var(--white-dim); font-size:.9rem; line-height:1.8;
+  margin-bottom:2rem; max-width:360px;
+}
+.arcade-promo-right {
+  display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+  position:relative; z-index:1; align-content:start;
+}
+.arcade-mini-card {
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  border-radius:14px; padding:1.2rem;
+  transition:border-color .25s, transform .25s;
+}
+.arcade-mini-card:hover { border-color:var(--yellow); transform:translateY(-3px); }
+.arcade-mini-card.span2 { grid-column:span 2; }
+.amc-icon  { font-size:1.8rem; margin-bottom:.5rem; }
+.amc-name  { font-weight:700; font-size:.88rem; margin-bottom:.2rem; }
+.amc-score { font-family:var(--ff-mono); font-size:.54rem; color:var(--blue); letter-spacing:2px; }
+
+@media(max-width:768px){
+  .arcade-promo-card { grid-template-columns:1fr; gap:2rem; padding:2rem 1.4rem; }
+  .arcade-promo-right { grid-template-columns:1fr 1fr; }
+  .arcade-mini-card.span2 { grid-column:span 2; }
 }

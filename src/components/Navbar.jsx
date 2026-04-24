@@ -9,6 +9,7 @@ const LINKS = [
   { to: "/story", label: "Story" },
   { to: "/leaderboard", label: "Leaderboard" },
   { to: "/contact", label: "Contact" },
+  { to: "/arcade", label: "⚡ Arcade" },
 ];
 
 export default function Navbar() {

@@ -253,6 +253,43 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* ── ARCADE PROMO ── */}
+      <section style={{ padding:"0 0 6rem" }}>
+        <div className="container">
+          <div className="arcade-promo-card">
+            <div className="arcade-promo-glow" />
+            <div className="arcade-promo-left">
+              <span className="section-tag">New Feature</span>
+              <h2 className="arcade-promo-title">
+                Mini Arcade<br /><span className="clip-yellow">Free to Play</span>
+              </h2>
+              <p className="arcade-promo-desc">
+                Test your reflexes, memory, and aim in three browser-based mini-games. No install needed.
+              </p>
+              <Link to="/arcade" className="btn-yellow">Play Now</Link>
+            </div>
+            <div className="arcade-promo-right">
+              <div className="arcade-mini-card span1">
+                <div className="amc-icon">⚡</div>
+                <div className="amc-name">Reflex Strike</div>
+                <div className="amc-score">250ms avg</div>
+              </div>
+              <div className="arcade-mini-card span1">
+                <div className="amc-icon">🧠</div>
+                <div className="amc-name">Memory Matrix</div>
+                <div className="amc-score">Level 8 avg</div>
+              </div>
+              <div className="arcade-mini-card span2">
+                <div className="amc-icon">🎯</div>
+                <div className="amc-name">Aim Trainer</div>
+                <div className="amc-score">65 acc avg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
       <section style={{ padding:"8rem 0" }}>
         <div className="container">
