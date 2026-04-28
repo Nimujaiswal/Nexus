@@ -9,7 +9,7 @@ const LINKS = [
   { to: "/story", label: "Story" },
   { to: "/leaderboard", label: "Leaderboard" },
   { to: "/contact", label: "Contact" },
-  { to: "/arcade", label: "⚡ Arcade" },
+  { to: "/arcade", label: "Arcade" },
 ];
 
 export default function Navbar() {
@@ -35,7 +35,13 @@ export default function Navbar() {
           {LINKS.map(l => (
             <li key={l.to}>
               <NavLink to={l.to} end={l.to === "/"} className={({ isActive }) => isActive ? "active" : ""}>
-                {l.label}
+                {l.to === "/arcade"
+                  ? <span style={{display:"inline-flex",alignItems:"center",gap:".35rem"}}>
+                      Arcade
+                      <span style={{background:"rgba(232,255,77,.15)",border:"1px solid rgba(232,255,77,.3)",borderRadius:"100px",padding:".05rem .4rem",fontSize:".56rem",color:"var(--yellow)",fontFamily:"var(--ff-mono)",letterSpacing:"1px",fontWeight:700,lineHeight:1.4}}>NEW</span>
+                    </span>
+                  : l.label
+                }
               </NavLink>
             </li>
           ))}
@@ -69,7 +75,7 @@ export default function Navbar() {
             <button
               onClick={handleLogout}
               style={{ background:"none",border:"none",color:"var(--white-dim)",
-                fontFamily:"var(--ff-display)",fontSize:"2rem",letterSpacing:"4px",cursor:"none" }}
+                fontFamily:"var(--ff-display)",fontSize:"2rem",letterSpacing:"4px",cursor:"pointer" }}
             >
               SIGN OUT
             </button>
