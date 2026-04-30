@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { GameModal, PLAYABLE_GAMES } from "./Arcade";
 import { GAMES } from "../data";
 
 const ALL_GENRES = ["All", ...new Set(GAMES.map(g => g.genre))];
@@ -14,6 +15,7 @@ export default function Games() {
   const [active, setActive] = useState("All");
   const [search, setSearch] = useState("");
   const [sort,   setSort]   = useState("rating");
+  const [activeGame, setActiveGame] = useState(null);
 
   const filtered = GAMES
     .filter(g => {
@@ -106,7 +108,7 @@ export default function Games() {
                   </div>
                   <div className="game-bottom-row">
                     <p className="game-players">● {g.players} playing</p>
-                    <button className="game-play-btn">Play Now</button>
+                    <button className="game-play-btn" onClick={() => setActiveGame(g.id)}>▶ Play</button>
                   </div>
                 </div>
               </div>
@@ -114,6 +116,8 @@ export default function Games() {
           </div>
         )}
       </div>
+
+      {activeGame && <GameModal gameId={activeGame} onClose={() => setActiveGame(null)} />}
     </main>
   );
 }
