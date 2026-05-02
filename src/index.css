@@ -1580,3 +1580,211 @@ main { animation:pageFadeIn .35s ease-out; }
   .moba-field { min-height:100px; }
   .mc-emoji { font-size:2.4rem; }
 }
+
+/* ═══════════════════════════════════════════════
+   NEW GAME CSS — v5
+═══════════════════════════════════════════════ */
+
+/* ── BATTLE GRID (Minesweeper) ── */
+.battle-grid-wrap {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  padding:1rem; overflow:hidden; position:relative;
+}
+.battle-grid {
+  display:grid; gap:3px;
+  width:100%; max-width:480px;
+}
+.bg-cell {
+  aspect-ratio:1; border-radius:6px;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--ff-display); font-size:clamp(.75rem,2.5vw,1.1rem);
+  cursor:pointer; transition:background .15s, transform .1s;
+  user-select:none; font-weight:900;
+}
+.bg-cell:hover:not(.rev):not(.mine) { background:rgba(255,255,255,.14); transform:scale(1.05); }
+.bg-cell.rev { background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.05); cursor:default; }
+.bg-cell.mine { background:rgba(248,113,113,.2); border-color:var(--red); animation:mineFlash .3s; }
+.bg-cell.flagged { background:rgba(232,255,77,.08); border-color:var(--yellow); }
+@keyframes mineFlash { 0%,100%{background:rgba(248,113,113,.2)} 50%{background:rgba(248,113,113,.5)} }
+.bg-overlay {
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:.6rem;
+  background:rgba(4,4,10,.88); backdrop-filter:blur(8px);
+  animation:pageFadeIn .3s;
+}
+
+/* ── WORD CIPHER ── */
+.cipher-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.cipher-body {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:1.5rem 2rem; gap:1rem;
+}
+.cipher-code {
+  font-family:var(--ff-display); font-size:clamp(2rem,7vw,4rem);
+  letter-spacing:.5em; color:var(--white); text-align:center;
+  text-shadow:0 0 30px rgba(255,255,255,.2);
+  animation:codeGlow 2s ease-in-out infinite alternate;
+}
+@keyframes codeGlow { from{text-shadow:0 0 20px rgba(255,255,255,.1)} to{text-shadow:0 0 40px rgba(255,255,255,.3)} }
+.cipher-hint {
+  font-family:var(--ff-mono); font-size:.72rem; color:var(--white-dim);
+  letter-spacing:1.5px; text-align:center; max-width:360px;
+}
+.cipher-input-wrap {
+  display:flex; gap:.6rem; align-items:center;
+  transition:transform .15s;
+}
+.cipher-input-wrap.miss { animation:wrongShake .3s; }
+.cipher-input-wrap.hit  { animation:correctBounce .3s; }
+@keyframes correctBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+.cipher-input {
+  background:var(--bg-3); border:2px solid var(--border-2);
+  border-radius:var(--radius-sm); padding:.75rem 1.2rem;
+  font-family:var(--ff-display); font-size:1.6rem; letter-spacing:6px;
+  text-align:center; text-transform:uppercase; outline:none;
+  transition:border-color .2s; width:240px;
+}
+.cipher-input:focus { border-color:var(--gc,var(--yellow)); }
+.cipher-submit {
+  padding:.75rem 1.2rem; border-radius:var(--radius-sm); border:none;
+  font-family:var(--ff-display); font-size:1.3rem; cursor:pointer;
+  transition:var(--t);
+}
+.cipher-submit:hover { transform:scale(1.08); }
+.cipher-feedback {
+  font-family:var(--ff-display); font-size:1.4rem; letter-spacing:3px;
+  animation:pageFadeIn .2s;
+}
+.cipher-feedback.miss { color:var(--red); }
+.cipher-alpha {
+  display:flex; flex-wrap:wrap; gap:.25rem; justify-content:center;
+  max-width:420px; margin-top:.5rem;
+}
+.alpha-pair {
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  border-radius:6px; padding:.15rem .4rem;
+  font-family:var(--ff-mono); font-size:.5rem; color:var(--white-dim);
+}
+.alpha-pair b { color:var(--white); }
+
+/* ── SNIPER SEQUENCE ── */
+.sniper-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.sniper-seq-display {
+  display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap;
+  padding:1rem 1.5rem; min-height:70px; align-content:center;
+}
+.ssd-cell {
+  width:48px; height:48px; border-radius:10px;
+  border:2px solid; display:flex; align-items:center; justify-content:center;
+  transition:all .2s; font-size:1.3rem;
+}
+.sniper-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:.6rem; padding:1rem 1.5rem; flex:1; align-content:center;
+  max-width:380px; margin:0 auto; width:100%; box-sizing:border-box;
+}
+.sniper-btn {
+  aspect-ratio:1; border-radius:12px; border:2px solid;
+  background:var(--bg-3); color:var(--white);
+  font-size:1.5rem; cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; justify-content:center;
+}
+.sniper-btn:hover:not(:disabled) { transform:scale(1.08); }
+.sniper-btn.active { transform:scale(1.15); }
+.sniper-btn:disabled { opacity:.4; cursor:not-allowed; }
+
+/* ── VOLT RACE ── */
+.volt-track {
+  flex:1; position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#050512,#0a0a20,#050512);
+}
+.track-line {
+  position:absolute; top:0; bottom:0; width:2px;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.12) 0px,rgba(255,255,255,.12) 20px,transparent 20px,transparent 40px);
+  animation:roadScroll .4s linear infinite;
+}
+@keyframes roadScroll { from{background-position:0 0} to{background-position:0 40px} }
+.volt-obstacle {
+  position:absolute; border-radius:8px; padding:.3rem;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; transform:translateX(-50%);
+  transition:top .016s linear;
+}
+.volt-boost {
+  position:absolute; font-size:1.5rem; transform:translateX(-50%);
+  filter:drop-shadow(0 0 10px var(--yellow));
+  animation:splashBob 1s ease-in-out infinite;
+}
+.volt-player {
+  position:absolute; bottom:15%; transform:translateX(-50%);
+}
+.volt-controls {
+  display:flex; justify-content:center; align-items:center;
+  gap:1rem; padding:.8rem; background:rgba(0,0,0,.4); flex-shrink:0;
+}
+.volt-btn {
+  width:54px; height:54px; border-radius:12px;
+  background:rgba(255,255,255,.08); border:1px solid var(--border-2);
+  color:var(--white); font-size:1.3rem; cursor:pointer; transition:var(--t);
+}
+.volt-btn:hover { background:rgba(255,255,255,.15); transform:scale(1.08); }
+.volt-btn:active { transform:scale(.95); }
+
+/* ── ARCADE PAGE v2 ── */
+.arcade-cards-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1.3rem;
+}
+.arcade-card {
+  background:var(--bg-2); border:1px solid var(--border);
+  border-radius:var(--radius); overflow:hidden; cursor:pointer;
+  transition:transform .3s cubic-bezier(.175,.885,.32,1.275), border-color .25s, box-shadow .3s;
+  display:flex; flex-direction:column;
+}
+.arcade-card:hover {
+  transform:translateY(-8px) scale(1.01);
+  border-color:var(--gc);
+  box-shadow:0 24px 60px rgba(0,0,0,.5), 0 0 0 1px var(--gc);
+}
+.arcade-card-top {
+  height:140px; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:.7rem; position:relative;
+}
+.arcade-card-icon {
+  font-size:3.8rem; filter:drop-shadow(0 0 18px var(--gc));
+  animation:splashBob 4s ease-in-out infinite;
+}
+.arcade-card-tags { display:flex; gap:.4rem; }
+.arcade-card-tag {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+  font-family:var(--ff-mono); font-size:.46rem; letter-spacing:2px;
+  text-transform:uppercase; padding:.18rem .5rem; border-radius:100px; color:var(--white-dim);
+}
+.arcade-card-body { padding:1.2rem 1.3rem; flex:1; display:flex; flex-direction:column; }
+.arcade-card-title { font-family:var(--ff-display); font-size:1.35rem; letter-spacing:.5px; margin-bottom:.45rem; }
+.arcade-card-desc { color:var(--white-dim); font-size:.82rem; line-height:1.7; margin-bottom:1rem; flex:1; }
+.arcade-card-btn {
+  width:100%; padding:.72rem; border-radius:var(--radius-sm); border:none;
+  font-family:var(--ff-body); font-size:.85rem; font-weight:800;
+  letter-spacing:.3px; cursor:pointer; transition:var(--t); margin-top:auto;
+}
+.arcade-card-btn:hover { filter:brightness(1.1); transform:scale(1.02); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .arcade-cards-grid { grid-template-columns:1fr 1fr; }
+  .battle-grid-wrap { padding:.6rem; }
+  .bg-cell { font-size:.65rem; border-radius:4px; }
+  .cipher-code { font-size:clamp(1.5rem,8vw,2.8rem); letter-spacing:.3em; }
+  .cipher-input { width:180px; font-size:1.2rem; letter-spacing:4px; }
+  .sniper-grid { max-width:300px; gap:.4rem; }
+  .sniper-btn { font-size:1.2rem; }
+  .ssd-cell { width:36px; height:36px; font-size:1rem; }
+  .volt-btn { width:64px; height:64px; font-size:1.5rem; }
+}
+@media(max-width:480px){
+  .arcade-cards-grid { grid-template-columns:1fr; }
+  .cipher-alpha { display:none; }
+  .sniper-seq-display { min-height:55px; }
+  .ssd-cell { width:30px; height:30px; font-size:.85rem; }
+}
