@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
+      <nav aria-label="Main navigation" className={`navbar${scrolled ? " scrolled" : ""}`}>
         <Link to="/" className="nav-logo">NEX<em>US</em></Link>
 
         <ul className="nav-links">
@@ -61,13 +61,13 @@ export default function Navbar() {
           )}
         </div>
 
-        <button className="nav-hamburger" onClick={() => setOpen(o => !o)}>
+        <button className="nav-hamburger" onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
           {open ? "✕" : "☰"}
         </button>
       </nav>
 
       {open && (
-        <div className="mobile-menu" onClick={() => setOpen(false)}>
+        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" onClick={() => setOpen(false)}>
           {LINKS.map(l => (
             <Link key={l.to} to={l.to}>{l.label}</Link>
           ))}

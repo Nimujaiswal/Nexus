@@ -4,64 +4,59 @@ import { FEATURES, SPECS } from "../data";
 
 export default function Features() {
   useScrollReveal();
-
   return (
-    <main style={{ paddingTop:"8rem", paddingBottom:"6rem", minHeight:"100vh" }}>
+    <main style={{ paddingTop:"8rem", paddingBottom:"var(--s24)", minHeight:"100vh" }}>
       <div className="container">
 
-        {/* Hero text */}
-        <div className="sr" style={{ maxWidth:820, marginBottom:"6rem" }}>
+        <div className="page-hero sr">
           <span className="section-tag">Platform Features</span>
-          <h1 style={{ fontFamily:"var(--ff-display)", fontSize:"clamp(3rem,7vw,7rem)", textTransform:"uppercase", letterSpacing:"-3px", lineHeight:.95 }}>
-            Built for<br /><span className="clip-text">Champions</span>
-          </h1>
-          <p style={{ color:"var(--white-dim)", fontSize:"1.05rem", lineHeight:1.8, marginTop:"1.5rem", maxWidth:540 }}>
-            Every feature engineered to give you the edge. From hardware-level
-            anti-cheat to AI matchmaking — NEXUS is the infrastructure serious gamers demand.
-          </p>
+          <h1>Built for<br /><span className="clip-text">Champions.</span></h1>
+          <p>Every feature engineered to give you the edge — from hardware anti-cheat to AI matchmaking and sub-10ms servers.</p>
         </div>
+
+        {/* Spec cards */}
+        <section aria-labelledby="specs-heading" style={{ marginBottom:"var(--s20)" }}>
+          <h2 id="specs-heading" className="sr-only">Platform Specifications</h2>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"var(--s4)" }} className="sr spec-grid">
+            {SPECS.map((s,i) => (
+              <div key={i} className="spec-card" style={{ transitionDelay:`${i*.04}s` }}>
+                <div className="spec-icon" aria-hidden="true">{s.icon}</div>
+                <div className="spec-label">{s.label}</div>
+                <div className="spec-value" aria-label={`${s.label}: ${s.value}`}>{s.value}</div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Feature rows */}
-        <div style={{ marginBottom:"6rem" }}>
-          {FEATURES.map((f, i) => (
-            <div key={i} className="feature-row sr" style={{ transitionDelay:`${i * 0.05}s` }}>
-              <div className="feature-num">{f.num}</div>
-              <div className="feature-name">
-                <span style={{ marginRight:".7rem" }}>{f.icon}</span>{f.name}
+        <section aria-labelledby="features-heading" style={{ marginBottom:"var(--s20)" }}>
+          <div style={{ marginBottom:"var(--s10)" }} className="sr">
+            <span className="section-tag">All Features</span>
+            <h2 id="features-heading" style={{ fontSize:"clamp(2rem,4vw,3.5rem)", letterSpacing:"-1px" }}>What You Get</h2>
+          </div>
+          <div role="list">
+            {FEATURES.map((f, i) => (
+              <div key={i} className="feature-row sr" role="listitem" style={{ transitionDelay:`${i*.05}s` }}>
+                <div className="feature-num" aria-hidden="true">{f.num}</div>
+                <h3 className="feature-name">
+                  <span aria-hidden="true" style={{ marginRight:"var(--s2)" }}>{f.icon}</span>
+                  {f.name}
+                </h3>
+                <p className="feature-detail">{f.detail}</p>
               </div>
-              <div className="feature-detail">{f.detail}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </section>
 
-        {/* Specs */}
-        <div className="sr">
-          <span className="section-tag">Platform Specs</span>
-          <h2 style={{ fontFamily:"var(--ff-display)", fontSize:"clamp(2rem,4vw,3.5rem)", textTransform:"uppercase", letterSpacing:"-1px", marginBottom:"2.5rem" }}>
-            By the Numbers
-          </h2>
-        </div>
-
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(210px, 1fr))", gap:"1rem", marginBottom:"6rem" }}>
-          {SPECS.map((s, i) => (
-            <div key={i} className="spec-card sr" style={{ transitionDelay:`${i * 0.055}s` }}>
-              <div className="spec-icon">{s.icon}</div>
-              <div className="spec-label">{s.label}</div>
-              <div className="spec-value">{s.value}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
         <div className="cta-block sr">
-          <span className="section-tag">Get Started</span>
-          <h2>Ready to <span className="clip-yellow">Dominate?</span></h2>
-          <p>All features included in every account. No paywalls. No pay-to-win.</p>
+          <h2>Ready to<br /><span className="clip-text">Experience It?</span></h2>
+          <p>Every feature is live right now. Join free — no subscription required.</p>
           <div className="cta-btns">
-            <Link to="/register" className="btn-yellow">Join Free Today</Link>
-            <Link to="/games"    className="btn-outline">Browse Games</Link>
+            <Link to="/register" className="btn-yellow">Get Started Free →</Link>
+            <Link to="/arcade" className="btn-outline">Try Mini Arcade</Link>
           </div>
         </div>
+
       </div>
     </main>
   );
