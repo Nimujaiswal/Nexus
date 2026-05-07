@@ -87,7 +87,7 @@ html {
 html::-webkit-scrollbar { display: none; }
 
 body {
-  background: var(--bg); color: var(--white);
+  background: #04040a; color: #f0f0f8;
   font-family: var(--ff-body); font-size: var(--text-md);
   line-height: 1.6; overflow-x: hidden; cursor: none;
   -webkit-font-smoothing: antialiased;
@@ -184,14 +184,16 @@ h3 { font-family: var(--ff-display); letter-spacing: .5px; line-height: 1.1; }
 
 /* ── SCROLL REVEAL ── */
 .sr {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
 }
 .sr.in-view { opacity: 1; transform: translateY(0); }
+/* Never hide elements that are already on screen at load */
+.sr[data-visible="true"] { opacity: 1; transform: translateY(0); }
 
 /* ── PAGE FADE IN ── */
-main { animation: pageFadeIn .3s ease-out; }
-@keyframes pageFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+main { opacity: 1; }
+@keyframes pageFadeIn { from{opacity:1;transform:translateY(0)} to{opacity:1;transform:translateY(0)} }
 
 /* ── LIVE DOT ── */
 .live-dot {
@@ -361,19 +363,21 @@ main { animation: pageFadeIn .3s ease-out; }
 }
 .hero-title {
   font-size: clamp(3.8rem, 7.5vw, 8rem);
-  letter-spacing: -2px; color: var(--white); margin-bottom: var(--s6);
+  letter-spacing: -2px; color: #f0f0f8; margin-bottom: 1.5rem;
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  text-transform: uppercase; line-height: .92;
 }
 .hero-title .hl { color: var(--yellow); }
-.hero-desc { font-size: var(--text-lg); color: var(--white-80); line-height: 1.8; margin-bottom: var(--s8); max-width: 420px; }
-.hero-cta { display: flex; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s10); }
-.hero-stats { display: flex; gap: var(--s8); padding-top: var(--s6); border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hero-desc { font-size: 1.125rem; color: rgba(240,240,248,.80); line-height: 1.8; margin-bottom: 2rem; max-width: 420px; }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.hero-stats { display: flex; gap: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(240,240,248,.08); flex-wrap: wrap; }
 .hero-stat-item { display: flex; flex-direction: column; gap: 2px; }
 .hero-stat-num {
   font-family: var(--ff-display); font-size: 1.8rem; line-height: 1;
   background: linear-gradient(135deg, var(--yellow), var(--blue));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.hero-stat-label { font-family: var(--ff-mono); font-size: var(--text-xs); letter-spacing: 3px; color: var(--white-25); text-transform: uppercase; }
+.hero-stat-label { font-family: "DM Mono", monospace; font-size: 0.625rem; letter-spacing: 3px; color: rgba(240,240,248,.25); text-transform: uppercase; }
 
 /* ── HERO SHOWCASE CARD ── */
 .hero-showcase {
