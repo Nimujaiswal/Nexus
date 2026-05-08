@@ -1080,3 +1080,80 @@ main { opacity: 1; }
   .team-grid { grid-template-columns:1fr 1fr !important; }
   .spec-grid { grid-template-columns:repeat(2,1fr) !important; }
 }
+
+/* ── HOME PAGE UTILITIES ── */
+.home-section { padding: 80px 0; }
+.home-section.bg-alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.h2-lg { font-family: var(--ff-display); font-size: clamp(2rem, 4.5vw, 3.8rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 16px; }
+.body-text { color: rgba(240,240,248,.5); line-height: 1.85; font-size: 1rem; }
+.mt-4 { margin-top: 16px; }
+.mt-3 { margin-top: 12px; }
+
+.problem-row {
+  display: flex; gap: 16px; align-items: center;
+  background: var(--bg-3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px;
+}
+
+.feat-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+
+.trust-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-bottom: 40px;
+}
+.trust-card {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px; text-align: center;
+}
+.trust-stat {
+  font-family: var(--ff-display); font-size: 1.8rem; line-height: 1;
+  background: linear-gradient(135deg, #e9ff4e, #4fb8dc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 4px;
+}
+.trust-label {
+  font-family: var(--ff-mono); font-size: .52rem;
+  letter-spacing: 2.5px; text-transform: uppercase; color: rgba(240,240,248,.25);
+}
+
+.testimonial-card {
+  max-width: 660px; margin: 0 auto;
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 24px; padding: 48px; text-align: center; position: relative; overflow: hidden;
+}
+.testimonial-quote-mark {
+  position: absolute; top: 16px; left: 24px;
+  font-size: 5rem; opacity: .06; font-family: serif; line-height: 1;
+}
+.testimonial-text {
+  font-size: 1.1rem; color: rgba(240,240,248,.85);
+  line-height: 1.85; margin-bottom: 24px; font-style: italic; position: relative; z-index: 1;
+}
+.testimonial-author {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+
+/* ── RESPONSIVE HOME UTILITIES ── */
+@media(max-width: 1024px) {
+  .feat-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-row { grid-template-columns: repeat(2, 1fr); }
+  .two-col-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media(max-width: 768px) {
+  .home-section { padding: 56px 0; }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+  .trust-row { grid-template-columns: 1fr 1fr; }
+  .testimonial-card { padding: 32px 20px; }
+  .testimonial-text { font-size: .95rem; }
+  .two-col-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+@media(max-width: 480px) {
+  .home-section { padding: 40px 0; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .trust-row { grid-template-columns: 1fr 1fr; }
+}

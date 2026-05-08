@@ -1,26 +1,14 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Ticker from "../components/Ticker";
 import { GAMES, FEATURES, LEADERBOARD } from "../data";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 const SHOWCASE_GAMES = [
   { emoji:"💀", genre:"Battle Royale", title:"Nexus Storm",     rating:"★ 9.4", players:"1.2M playing",  avatar:"🐺", player:"ShadowWolf_X", score:"98,420", bg:"linear-gradient(135deg,#130538,#1a0645,#0c1f45)" },
   { emoji:"🗡️", genre:"RPG",          title:"Void Realm",      rating:"★ 9.7", players:"890K playing",  avatar:"🔮", player:"VoidRunner99",  score:"78,900", bg:"linear-gradient(135deg,#061a0e,#0a3d1f,#05140b)" },
   { emoji:"🚀", genre:"Adventure",    title:"Stellar Drift",   rating:"★ 9.1", players:"640K playing",  avatar:"🚀", player:"StarPilot",     score:"68,400", bg:"linear-gradient(135deg,#1a0606,#3d0a0a,#200808)" },
   { emoji:"⚡", genre:"MOBA",         title:"Arcane Uprising", rating:"★ 9.5", players:"2.1M playing",  avatar:"⚡", player:"NeonViper",     score:"91,055", bg:"linear-gradient(135deg,#0e061a,#270640,#0a0320)" },
-];
-
-const TRUST_ITEMS = [
-  { icon:"🏆", stat:"$5M+",   label:"Prize Money Awarded" },
-  { icon:"🌍", stat:"150+",   label:"Countries Represented" },
-  { icon:"⭐", stat:"4.9/5",  label:"Average User Rating" },
-  { icon:"🛡️", stat:"99.99%", label:"Cheat-Free Matches" },
-];
-
-const TESTIMONIALS = [
-  { avatar:"🐺", name:"ShadowWolf_X", role:"Rank #1 Global · Nexus Storm",     quote:"NEXUS completely changed how I compete. The matchmaking is insanely good — every game feels fair and intense." },
-  { avatar:"🔮", name:"VoidRunner99",  role:"Pro Player · Void Realm",           quote:"Sub-10ms latency is real. I switched from three other platforms and the difference is night and day." },
-  { avatar:"🚀", name:"StarPilot",     role:"Content Creator · 2.4M Followers",  quote:"The community tools are unmatched. I stream directly from NEXUS and clip sharing is seamlessly built in." },
 ];
 
 const HERO_STATS = [
@@ -30,10 +18,31 @@ const HERO_STATS = [
   { num:"99.9%", label:"Uptime"         },
 ];
 
+const TRUST_ITEMS = [
+  { icon:"🏆", stat:"$5M+",    label:"Prize Money Awarded"  },
+  { icon:"🌍", stat:"150+",    label:"Countries"             },
+  { icon:"⭐", stat:"4.9/5",   label:"User Rating"           },
+  { icon:"🛡️", stat:"99.99%", label:"Cheat-Free Matches"    },
+];
+
+const TESTIMONIALS = [
+  { avatar:"🐺", name:"ShadowWolf_X", role:"Rank #1 Global · Nexus Storm",    quote:"NEXUS completely changed how I compete. The matchmaking is insanely good — every game feels fair and intense." },
+  { avatar:"🔮", name:"VoidRunner99",  role:"Pro Player · Void Realm",          quote:"Sub-10ms latency is real. I switched from three other platforms and the difference is night and day." },
+  { avatar:"🚀", name:"StarPilot",     role:"Content Creator · 2.4M Followers", quote:"The community tools are unmatched. I stream directly from NEXUS and clip sharing is seamlessly built in." },
+];
+
+const PROBLEMS = [
+  { icon:"😤", prob:"6 launchers for 6 games",         sol:"One platform, everything"    },
+  { icon:"💸", prob:"Multiple paid subscriptions",     sol:"Free forever, premium optional" },
+  { icon:"😞", prob:"Cheaters in every lobby",         sol:"Kernel-level AI anti-cheat"  },
+  { icon:"📵", prob:"Progress lost switching devices", sol:"Universal cloud saves"        },
+];
+
 export default function Home() {
+  useScrollReveal();
   const navigate = useNavigate();
   const featured = GAMES.filter(g => g.featured).slice(0, 3);
-  const [activeGame, setActiveGame] = useState(0);
+  const [activeGame,        setActiveGame]        = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
@@ -46,27 +55,25 @@ export default function Home() {
     return () => clearInterval(id);
   }, []);
 
-  const game = SHOWCASE_GAMES[activeGame];
+  const game        = SHOWCASE_GAMES[activeGame];
   const testimonial = TESTIMONIALS[activeTestimonial];
 
   return (
     <main>
 
-      {/* ══════════════════════════════════════
-          HERO — Value prop in under 3 seconds
-      ══════════════════════════════════════ */}
-      <section className="hero" aria-label="Hero section">
-        <div className="hero-bg" aria-hidden="true" />
-        <div className="hero-grid" aria-hidden="true" />
-        <div className="hero-orb1" aria-hidden="true" />
-        <div className="hero-orb2" aria-hidden="true" />
+      {/* ── HERO ── */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="hero-grid" />
+        <div className="hero-orb1" />
+        <div className="hero-orb2" />
 
         <div className="hero-inner">
-          {/* Left — Headline + CTA */}
+          {/* LEFT */}
           <div className="hero-left">
             <div className="hero-eyebrow">
-              <span className="live-dot" aria-hidden="true" />
-              <span>840K Players Online Now</span>
+              <span className="live-dot" />
+              840K Players Online Now
             </div>
 
             <h1 className="hero-title">
@@ -76,39 +83,35 @@ export default function Home() {
             </h1>
 
             <p className="hero-desc">
-              500+ premium games, AI matchmaking, and sub-10ms latency — 
+              500+ premium games, AI matchmaking, and sub-10ms latency —
               all in one free cross-platform ecosystem.
             </p>
 
             <div className="hero-cta">
-              <Link to="/register" className="btn-yellow" aria-label="Create free account">
-                Start for Free →
-              </Link>
-              <Link to="/games" className="btn-outline" aria-label="Browse game library">
-                Explore Games
-              </Link>
+              <Link to="/register" className="btn-yellow">Start for Free →</Link>
+              <Link to="/games"    className="btn-outline">Explore Games</Link>
             </div>
 
-            <div className="hero-stats" role="list" aria-label="Platform statistics">
+            <div className="hero-stats">
               {HERO_STATS.map((s, i) => (
-                <div key={i} className="hero-stat-item" role="listitem">
-                  <div className="hero-stat-num" aria-label={`${s.num} ${s.label}`}>{s.num}</div>
+                <div key={i} className="hero-stat-item">
+                  <div className="hero-stat-num">{s.num}</div>
                   <div className="hero-stat-label">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — Live showcase card */}
+          {/* RIGHT — Showcase */}
           <div className="hero-right">
-            <div className="hero-badge hero-badge-1" aria-hidden="true">
+            <div className="hero-badge hero-badge-1">
               <span className="hero-badge-icon">🏆</span>
               <div className="hero-badge-text">
                 <span className="hero-badge-title">Season 7 Live</span>
                 <span className="hero-badge-sub">$1M PRIZE POOL</span>
               </div>
             </div>
-            <div className="hero-badge hero-badge-2" aria-hidden="true">
+            <div className="hero-badge hero-badge-2">
               <span className="hero-badge-icon">⚡</span>
               <div className="hero-badge-text">
                 <span className="hero-badge-title">Match Found</span>
@@ -116,19 +119,17 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="hero-showcase" role="region" aria-label="Live game showcase">
+            <div className="hero-showcase">
               <div className="showcase-header">
-                <div className="showcase-dots" aria-hidden="true"><span /><span /><span /></div>
+                <div className="showcase-dots"><span /><span /><span /></div>
                 <span className="showcase-label">NEXUS PLATFORM</span>
                 <div className="showcase-live"><span className="live-dot" />LIVE</div>
               </div>
-
-              <div className="showcase-game" style={{ background: game.bg }} aria-hidden="true">
+              <div className="showcase-game" style={{ background: game.bg }}>
                 <div className="showcase-game-glow" />
                 <div className="showcase-game-particles" />
                 <span className="showcase-game-emoji">{game.emoji}</span>
               </div>
-
               <div className="showcase-info">
                 <div className="showcase-game-meta">
                   <span className="showcase-game-genre">{game.genre}</span>
@@ -136,31 +137,26 @@ export default function Home() {
                 </div>
                 <div className="showcase-game-title">{game.title}</div>
                 <div className="showcase-game-players">● {game.players}</div>
-
                 <div className="showcase-player-row">
                   <div className="showcase-player-info">
                     <div className="showcase-player-avatar">{game.avatar}</div>
                     <div>
                       <div className="showcase-player-name">{game.player}</div>
-                      <div style={{ fontFamily:"var(--ff-mono)", fontSize:"var(--text-xs)", color:"var(--white-25)", letterSpacing:"2px" }}>TOP PLAYER</div>
+                      <div style={{ fontFamily:"var(--ff-mono)", fontSize:".48rem", color:"var(--white-25)", letterSpacing:"2px" }}>TOP PLAYER</div>
                     </div>
                   </div>
                   <div className="showcase-player-score">{game.score}</div>
                 </div>
-
-                {/* Indicator dots */}
-                <div style={{ display:"flex", gap:"var(--s2)", marginBottom:"var(--s3)", justifyContent:"center" }} role="tablist" aria-label="Game selector">
+                <div style={{ display:"flex", gap:"6px", marginBottom:"12px", justifyContent:"center" }}>
                   {SHOWCASE_GAMES.map((_, i) => (
-                    <button
-                      key={i} role="tab" aria-selected={i === activeGame}
-                      aria-label={`Show game ${i + 1}`}
-                      onClick={() => setActiveGame(i)}
-                      style={{ width: i===activeGame?"20px":"6px", height:"6px", borderRadius:"3px", background: i===activeGame?"var(--yellow)":"rgba(255,255,255,.2)", border:"none", cursor:"pointer", transition:"all .3s", padding:0 }}
+                    <button key={i} onClick={() => setActiveGame(i)}
+                      style={{ width:i===activeGame?"20px":"6px", height:"6px", borderRadius:"3px",
+                        background:i===activeGame?"#e9ff4e":"rgba(255,255,255,.2)",
+                        border:"none", cursor:"pointer", transition:"all .3s", padding:0 }}
                     />
                   ))}
                 </div>
-
-                <button className="showcase-btn" onClick={() => navigate("/arcade")} aria-label="Play now in arcade">
+                <button className="showcase-btn" onClick={() => navigate("/arcade")}>
                   ▶  Play Now — It's Free
                 </button>
               </div>
@@ -169,39 +165,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Ticker */}
       <Ticker />
 
-      {/* ══════════════════════════════════════
-          PROBLEM — Why NEXUS exists
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"var(--s24) 0", background:"var(--bg-2)", borderTop:"1px solid var(--border)", borderBottom:"1px solid var(--border)" }} aria-labelledby="problem-heading">
+      {/* ── PROBLEM ── */}
+      <section className="home-section bg-alt">
         <div className="container">
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"var(--s16)", alignItems:"center" }}>
+          <div className="two-col-grid">
             <div className="sr">
               <span className="section-tag">The Problem</span>
-              <h2 id="problem-heading" style={{ fontSize:"clamp(2rem,4vw,3.5rem)", letterSpacing:"-1px", marginBottom:"var(--s5)" }}>
-                Gaming is<br /><span style={{ color:"var(--red)" }}>Fragmented.</span>
-              </h2>
-              <p style={{ color:"var(--white-50)", lineHeight:1.9, fontSize:"var(--text-lg)", marginBottom:"var(--s5)" }}>
-                You have games on 6 different platforms, pay for 4 subscriptions, and still get matched against cheaters with 200ms ping.
+              <h2 className="h2-lg">Gaming is<br /><span style={{ color:"#f87171" }}>Fragmented.</span></h2>
+              <p className="body-text mt-4">
+                You have games on 6 different platforms, pay for 4 subscriptions,
+                and still get matched against cheaters with 200ms ping.
               </p>
-              <p style={{ color:"var(--white-50)", lineHeight:1.9, fontSize:"var(--text-md)" }}>
-                Your progress doesn't follow you. Your friends are on different systems. And every platform charges you more for less.
+              <p className="body-text mt-3">
+                Your progress doesn't follow you. Your friends are on different systems.
+                Every platform charges you more for less.
               </p>
             </div>
-            <div className="sr" style={{ display:"flex", flexDirection:"column", gap:"var(--s3)" }}>
-              {[
-                { icon:"😤", prob:"6 launchers for 6 games", sol:"One platform, everything" },
-                { icon:"💸", prob:"Multiple paid subscriptions", sol:"Free forever, premium optional" },
-                { icon:"😞", prob:"Cheaters in every lobby",   sol:"Kernel-level AI anti-cheat" },
-                { icon:"📵", prob:"Progress lost switching devices", sol:"Universal cloud saves" },
-              ].map((item, i) => (
-                <div key={i} style={{ display:"flex", gap:"var(--s4)", alignItems:"center", background:"var(--bg-3)", border:"1px solid var(--border)", borderRadius:"var(--r-lg)", padding:"var(--s4) var(--s5)" }}>
-                  <span style={{ fontSize:"1.5rem", flexShrink:0 }}>{item.icon}</span>
+            <div className="sr" style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
+              {PROBLEMS.map((item, i) => (
+                <div key={i} className="problem-row">
+                  <span style={{ fontSize:"1.4rem", flexShrink:0 }}>{item.icon}</span>
                   <div style={{ flex:1 }}>
-                    <div style={{ color:"var(--white-50)", fontSize:"var(--text-sm)", textDecoration:"line-through" }}>{item.prob}</div>
-                    <div style={{ color:"var(--green)", fontSize:"var(--text-base)", fontWeight:600, marginTop:"2px" }}>✓ {item.sol}</div>
+                    <div style={{ color:"rgba(240,240,248,.4)", fontSize:".85rem", textDecoration:"line-through" }}>{item.prob}</div>
+                    <div style={{ color:"#4ade80", fontSize:".9rem", fontWeight:600, marginTop:"2px" }}>✓ {item.sol}</div>
                   </div>
                 </div>
               ))}
@@ -210,28 +198,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          FEATURES — Solution showcase
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"var(--s24) 0" }} aria-labelledby="features-heading">
+      {/* ── FEATURES ── */}
+      <section className="home-section">
         <div className="container">
-          <div style={{ textAlign:"center", marginBottom:"var(--s16)" }} className="sr">
+          <div className="section-header sr">
             <span className="section-tag">Why NEXUS</span>
-            <h2 id="features-heading" style={{ fontSize:"clamp(2.2rem,5vw,4.5rem)", letterSpacing:"-2px", maxWidth:600, margin:"0 auto var(--s4)" }}>
-              Built for Champions.
-            </h2>
-            <p style={{ color:"var(--white-50)", maxWidth:480, margin:"0 auto", fontSize:"var(--text-lg)", lineHeight:1.8 }}>
-              Every feature engineered to give you the edge.
-            </p>
+            <h2 className="h2-lg">Built for Champions.</h2>
+            <p className="body-text" style={{ maxWidth:480, margin:"0 auto" }}>Every feature engineered to give you the edge.</p>
           </div>
-
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"var(--s4)" }} className="features-4-grid">
-            {FEATURES.slice(0,8).map((f,i) => (
-              <div key={i} className="sr feat-card" style={{ transitionDelay:`${i*.05}s` }}>
-                <div style={{ fontSize:"2rem", marginBottom:"var(--s3)", lineHeight:1 }}>{f.icon}</div>
-                <div style={{ fontFamily:"var(--ff-mono)", fontSize:"var(--text-xs)", letterSpacing:"3px", color:"var(--violet)", textTransform:"uppercase", marginBottom:"var(--s2)" }}>{f.num}</div>
-                <h3 style={{ fontSize:"var(--text-xl)", marginBottom:"var(--s2)", letterSpacing:".3px" }}>{f.name}</h3>
-                <p style={{ color:"var(--white-50)", fontSize:"var(--text-base)", lineHeight:1.75 }}>{f.detail}</p>
+          <div className="feat-grid">
+            {FEATURES.slice(0, 8).map((f, i) => (
+              <div key={i} className="feat-card sr" style={{ transitionDelay:`${i * 0.06}s` }}>
+                <div style={{ fontSize:"2rem", marginBottom:"12px", lineHeight:1 }}>{f.icon}</div>
+                <div style={{ fontFamily:"var(--ff-mono)", fontSize:".55rem", letterSpacing:"3px", color:"var(--violet)", textTransform:"uppercase", marginBottom:"8px" }}>{f.num}</div>
+                <h3 style={{ fontSize:"1.1rem", marginBottom:"8px" }}>{f.name}</h3>
+                <p style={{ color:"rgba(240,240,248,.5)", fontSize:".85rem", lineHeight:1.7 }}>{f.detail}</p>
               </div>
             ))}
           </div>
@@ -240,22 +221,20 @@ export default function Home() {
 
       <Ticker reverse />
 
-      {/* ══════════════════════════════════════
-          FEATURED GAMES
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"var(--s20) 0", background:"var(--bg-2)", borderTop:"1px solid var(--border)", borderBottom:"1px solid var(--border)" }} aria-labelledby="games-heading">
+      {/* ── FEATURED GAMES ── */}
+      <section className="home-section bg-alt">
         <div className="container">
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:"var(--s10)", flexWrap:"wrap", gap:"var(--s4)" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:"40px", flexWrap:"wrap", gap:"16px" }}>
             <div className="sr">
               <span className="section-tag">Featured Titles</span>
-              <h2 id="games-heading" style={{ fontSize:"clamp(1.8rem,4vw,3.5rem)", letterSpacing:"-1px" }}>Top Games This Week</h2>
+              <h2 style={{ fontFamily:"var(--ff-display)", fontSize:"clamp(1.8rem,4vw,3rem)", textTransform:"uppercase", letterSpacing:"-1px" }}>Top Games This Week</h2>
             </div>
             <Link to="/games" className="btn-outline btn-sm sr">View All 500+ →</Link>
           </div>
           <div className="games-grid">
             {featured.map(g => (
               <article key={g.id} className="game-card sr">
-                <div className={`game-thumb ${g.thumb}`} aria-hidden="true">
+                <div className={`game-thumb ${g.thumb}`}>
                   <span>{g.emoji}</span>
                   {g.featured && <span className="game-badge">Featured</span>}
                 </div>
@@ -264,10 +243,10 @@ export default function Home() {
                   <h3 className="game-name">{g.title}</h3>
                   <p className="game-desc">{g.description}</p>
                   <div className="game-footer">
-                    <span className="game-rating" aria-label={`Rating ${g.rating}`}>★ {g.rating}</span>
+                    <span className="game-rating">★ {g.rating}</span>
                     <span className="game-platforms">{g.platforms.slice(0,3).join(" · ")}</span>
                   </div>
-                  <p className="game-players" aria-live="polite">● {g.players} playing now</p>
+                  <p className="game-players">● {g.players} playing now</p>
                 </div>
               </article>
             ))}
@@ -275,10 +254,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          STATS — Social proof numbers
-      ══════════════════════════════════════ */}
-      <section className="stats-strip" aria-label="Platform statistics">
+      {/* ── STATS ── */}
+      <section className="stats-strip">
         <div className="container">
           <div className="stats-grid">
             {[
@@ -286,9 +263,9 @@ export default function Home() {
               { num:"500+",  label:"Games in Library"       },
               { num:"$5M+",  label:"Prize Money Awarded"    },
               { num:"99.9%", label:"Platform Uptime"        },
-            ].map((s,i) => (
+            ].map((s, i) => (
               <div key={i} className="sr" style={{ textAlign:"center", transitionDelay:`${i*.08}s` }}>
-                <div className="stat-num" aria-label={`${s.num} ${s.label}`}>{s.num}</div>
+                <div className="stat-num">{s.num}</div>
                 <div className="stat-label">{s.label}</div>
               </div>
             ))}
@@ -296,81 +273,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          TESTIMONIALS — Social proof
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"var(--s24) 0" }} aria-labelledby="testimonials-heading">
+      {/* ── TESTIMONIALS ── */}
+      <section className="home-section">
         <div className="container">
-          <div style={{ textAlign:"center", marginBottom:"var(--s12)" }} className="sr">
+          <div className="section-header sr">
             <span className="section-tag">Player Voices</span>
-            <h2 id="testimonials-heading" style={{ fontSize:"clamp(2rem,4vw,3.5rem)", letterSpacing:"-1px" }}>
-              Trusted by Millions
-            </h2>
+            <h2 className="h2-lg">Trusted by Millions</h2>
           </div>
 
-          {/* Trust items */}
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"var(--s4)", marginBottom:"var(--s12)" }} className="trust-grid sr">
-            {TRUST_ITEMS.map((t,i) => (
-              <div key={i} style={{ background:"var(--bg-2)", border:"1px solid var(--border)", borderRadius:"var(--r-lg)", padding:"var(--s6)", textAlign:"center" }}>
-                <div style={{ fontSize:"1.8rem", marginBottom:"var(--s2)" }}>{t.icon}</div>
-                <div style={{ fontFamily:"var(--ff-display)", fontSize:"1.8rem", background:"linear-gradient(135deg,var(--yellow),var(--blue))", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", lineHeight:1, marginBottom:"var(--s1)" }}>{t.stat}</div>
-                <div style={{ fontFamily:"var(--ff-mono)", fontSize:"var(--text-xs)", letterSpacing:"2px", color:"var(--white-25)", textTransform:"uppercase" }}>{t.label}</div>
+          <div className="trust-row sr">
+            {TRUST_ITEMS.map((t, i) => (
+              <div key={i} className="trust-card">
+                <div style={{ fontSize:"1.6rem", marginBottom:"8px" }}>{t.icon}</div>
+                <div className="trust-stat">{t.stat}</div>
+                <div className="trust-label">{t.label}</div>
               </div>
             ))}
           </div>
 
-          {/* Rotating testimonial */}
-          <div style={{ maxWidth:680, margin:"0 auto" }} className="sr">
-            <div style={{ background:"var(--bg-2)", border:"1px solid var(--border)", borderRadius:"var(--r-2xl)", padding:"var(--s10)", textAlign:"center", position:"relative", overflow:"hidden" }}>
-              <div style={{ position:"absolute", top:"var(--s5)", left:"var(--s6)", fontSize:"4rem", opacity:.08, fontFamily:"serif", lineHeight:1 }}>"</div>
-              <p style={{ fontSize:"var(--text-lg)", color:"var(--white-80)", lineHeight:1.85, marginBottom:"var(--s6)", fontStyle:"italic", position:"relative", zIndex:1 }}>
-                "{testimonial.quote}"
-              </p>
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:"var(--s3)" }}>
-                <span style={{ fontSize:"1.8rem" }}>{testimonial.avatar}</span>
-                <div style={{ textAlign:"left" }}>
-                  <div style={{ fontWeight:700 }}>{testimonial.name}</div>
-                  <div style={{ fontFamily:"var(--ff-mono)", fontSize:"var(--text-xs)", color:"var(--blue)", letterSpacing:"2px" }}>{testimonial.role}</div>
-                </div>
+          <div className="testimonial-card sr">
+            <div className="testimonial-quote-mark">"</div>
+            <p className="testimonial-text">"{testimonial.quote}"</p>
+            <div className="testimonial-author">
+              <span style={{ fontSize:"1.8rem" }}>{testimonial.avatar}</span>
+              <div>
+                <div style={{ fontWeight:700 }}>{testimonial.name}</div>
+                <div style={{ fontFamily:"var(--ff-mono)", fontSize:".55rem", color:"var(--blue)", letterSpacing:"2px" }}>{testimonial.role}</div>
               </div>
-              {/* Dots */}
-              <div style={{ display:"flex", gap:"var(--s2)", justifyContent:"center", marginTop:"var(--s6)" }}>
-                {TESTIMONIALS.map((_,i) => (
-                  <button key={i} onClick={()=>setActiveTestimonial(i)} aria-label={`Testimonial ${i+1}`}
-                    style={{ width:i===activeTestimonial?"20px":"6px", height:"6px", borderRadius:"3px", background:i===activeTestimonial?"var(--blue)":"rgba(255,255,255,.2)", border:"none", cursor:"pointer", transition:"all .3s", padding:0 }}
-                  />
-                ))}
-              </div>
+            </div>
+            <div style={{ display:"flex", gap:"8px", justifyContent:"center", marginTop:"20px" }}>
+              {TESTIMONIALS.map((_, i) => (
+                <button key={i} onClick={() => setActiveTestimonial(i)}
+                  style={{ width:i===activeTestimonial?"20px":"6px", height:"6px", borderRadius:"3px",
+                    background:i===activeTestimonial?"var(--blue)":"rgba(255,255,255,.2)",
+                    border:"none", cursor:"pointer", transition:"all .3s", padding:0 }}
+                />
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          ARCADE PROMO
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"0 0 var(--s24)" }} aria-labelledby="arcade-heading">
+      {/* ── ARCADE PROMO ── */}
+      <section className="home-section bg-alt">
         <div className="container">
           <div className="arcade-promo-card sr">
-            <div className="arcade-promo-glow" aria-hidden="true" />
+            <div className="arcade-promo-glow" />
             <div className="arcade-promo-left">
               <span className="section-tag">Free Mini Games</span>
-              <h2 id="arcade-heading" className="arcade-promo-title">
+              <h2 className="arcade-promo-title">
                 Mini Arcade<br /><span className="clip-yellow">No Download.</span>
               </h2>
               <p className="arcade-promo-desc">
-                7 unique browser games — minesweeper, cipher decoding, dodge, racing, MOBA combat and more. Free. Instant. In-browser.
+                7 unique browser games — minesweeper, cipher decoding, dodge, racing, MOBA brawl and more. Free. Instant. In-browser.
               </p>
-              <Link to="/arcade" className="btn-yellow" aria-label="Play arcade games">Play Free →</Link>
+              <Link to="/arcade" className="btn-yellow">Play Free →</Link>
             </div>
             <div className="arcade-promo-right">
               {[
-                { icon:"💀", name:"Battle Grid",    score:"Strategy"  },
-                { icon:"👻", name:"Ghost Weave",    score:"Cipher"    },
-                { icon:"🏎️", name:"Volt Strike",    score:"Racing"    },
-                { icon:"🥋", name:"Shadow Court",   score:"Fighting"  },
-              ].map((g,i) => (
-                <div key={i} className={`arcade-mini-card${i===3?" span2":""}`}>
+                { icon:"💀", name:"Battle Grid",  score:"Strategy" },
+                { icon:"👻", name:"Ghost Weave",  score:"Cipher"   },
+                { icon:"🏎️", name:"Volt Strike",  score:"Racing"   },
+                { icon:"🥋", name:"Shadow Court", score:"Fighting" },
+              ].map((g, i) => (
+                <div key={i} className={`arcade-mini-card${i === 3 ? " span2" : ""}`}>
                   <div className="amc-icon">{g.icon}</div>
                   <div className="amc-name">{g.name}</div>
                   <div className="amc-score">{g.score}</div>
@@ -381,20 +347,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          FINAL CTA — Conversion section
-      ══════════════════════════════════════ */}
-      <section style={{ padding:"var(--s24) 0" }} aria-labelledby="cta-heading">
+      {/* ── FINAL CTA ── */}
+      <section className="home-section">
         <div className="container">
           <div className="cta-block sr">
             <span className="section-tag" style={{ justifyContent:"center" }}>Free Forever</span>
-            <h2 id="cta-heading">Your Legend<br /><span className="clip-text">Starts Today.</span></h2>
+            <h2>Your Legend<br /><span className="clip-text">Starts Today.</span></h2>
             <p>Join 2.4 million players on the most advanced gaming platform on Earth. Free to start. No credit card. No catch.</p>
             <div className="cta-btns">
-              <Link to="/register" className="btn-yellow" aria-label="Create free account">Create Free Account →</Link>
-              <Link to="/games" className="btn-outline" aria-label="Browse games">Browse 500+ Games</Link>
+              <Link to="/register" className="btn-yellow">Create Free Account →</Link>
+              <Link to="/games"    className="btn-outline">Browse 500+ Games</Link>
             </div>
-            <p style={{ marginTop:"var(--s5)", fontFamily:"var(--ff-mono)", fontSize:"var(--text-xs)", color:"var(--white-25)", letterSpacing:"2px", textTransform:"uppercase" }}>
+            <p style={{ marginTop:"20px", fontFamily:"var(--ff-mono)", fontSize:".55rem", color:"rgba(240,240,248,.25)", letterSpacing:"2px", textTransform:"uppercase" }}>
               No credit card · Free forever · Cancel anytime
             </p>
           </div>
